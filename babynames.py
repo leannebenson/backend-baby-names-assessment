@@ -43,9 +43,24 @@ def extract_names(filename):
     the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', 'Aaron 57', 'Abagail 895', ...]
     """
+    
+
     names = []
-    # +++your code here+++
-    return names
+
+    with open(filename) as f:
+        contents = f.read()
+        year = re.search(r'Popularity\sin\s(\d\d\d\d)', contents)
+        only_year = year.group(1)
+        names.append(only_year)
+        extNames = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', contents)
+    
+    # name_dict = {}
+
+    for name in extNames:
+        names.append(name[2] + ", " + name[0])
+        names.append(name[1] + ", " + name[0])
+
+    return sorted(names)
 
 
 def create_parser():
@@ -83,7 +98,18 @@ def main(args):
     # or to write the list to a summary file (e.g. `baby1990.html.summary`).
 
     # +++your code here+++
+    
+    for file in file_list:
+        extractedfile = extract_names(file)
+        extractedfile = ("\n".join(extractedfile))
 
+        if create_summary:
+            newfile = file + ".summary"
+            f =  open(newfile, "w")
+            f.write(extractedfile)
+            f.close
+        else:
+            print(extractedfile)
 
 if __name__ == '__main__':
     main(sys.argv[1:])
