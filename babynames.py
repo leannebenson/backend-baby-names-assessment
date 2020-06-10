@@ -52,11 +52,11 @@ def extract_names(filename):
         year = re.search(r'Popularity\sin\s(\d\d\d\d)', contents)
         only_year = year.group(1)
         names.append(only_year)
-        extNames = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', contents)
+        list_names = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', contents)
     
     # name_dict = {}
 
-    for name in extNames:
+    for name in list_names:
         names.append(name[2] + ", " + name[0])
         names.append(name[1] + ", " + name[0])
 
@@ -100,16 +100,16 @@ def main(args):
     # +++your code here+++
     
     for file in file_list:
-        extractedfile = extract_names(file)
-        extractedfile = ("\n".join(extractedfile))
+        extract_file = extract_names(file)
+        extract_file = ("\n".join(extract_file))
 
         if create_summary:
-            newfile = file + ".summary"
-            f =  open(newfile, "w")
-            f.write(extractedfile)
+            new_file = file + ".summary"
+            f =  open(new_file, "w")
+            f.write(extract_file)
             f.close
         else:
-            print(extractedfile)
+            print(extract_file)
 
 if __name__ == '__main__':
     main(sys.argv[1:])
