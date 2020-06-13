@@ -53,13 +53,15 @@ def extract_names(filename):
         only_year = year.group(1)
         names.append(only_year)
         list_names = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', contents)
-    
-    # name_dict = {}
+        list_names = list(dict.fromkeys(list_names))
+        # dict = {}
+        
 
     for name in list_names:
+        
         names.append(name[2] + ", " + name[0])
         names.append(name[1] + ", " + name[0])
-
+        
     return sorted(names)
 
 
@@ -82,7 +84,7 @@ def main(args):
     # Run the parser to collect command line arguments into a
     # NAMESPACE called 'ns'
     ns = parser.parse_args(args)
-
+    
     if not ns:
         parser.print_usage()
         sys.exit(1)
